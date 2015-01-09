@@ -1,8 +1,10 @@
 package liikkuminen;
 
-import lejos.nxt.Motor;
-import lejos.nxt.MotorPort;
+import lejos.nxt.Button;
+import lejos.nxt.LCD;
 import lejos.nxt.NXTRegulatedMotor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.TouchSensor;
 
 
 /*
@@ -11,13 +13,24 @@ import lejos.nxt.NXTRegulatedMotor;
 
 public class Tiputtaja {
 
-	private static NXTRegulatedMotor tiputtaja;
+	NXTRegulatedMotor tiputtaja;
+	TouchSensor painoSensori;
+	public int lkm = 0;
 
 	public Tiputtaja (NXTRegulatedMotor tiputtavaMoottori){
-		tiputtaja = new NXTRegulatedMotor(MotorPort.C);
+		tiputtaja = tiputtavaMoottori;
+		painoSensori = new TouchSensor(SensorPort.S3); 
 	}
 
-	public static boolean tiputaYksi() throws Exception {
+	public boolean tiputaYksi() throws Exception {
+		lkm++;
+		if(painoSensori.isPressed()){
+			LCD.clear();
+			LCD.drawString("Lajittelin " + lkm, 0, 1);
+			LCD.drawString("palaa", 0, 2);
+			Button.waitForPress(5000);
+			System.exit(0);
+		}
 		tiputtaja.setSpeed(100);
 		tiputtaja.rotate(-33);
 		return true;

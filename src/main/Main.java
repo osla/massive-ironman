@@ -13,16 +13,14 @@ public class Main {
 		static final NXTRegulatedMotor vMoottori = Motor.B;
 		static final NXTRegulatedMotor oMoottori = Motor.A;
 		static final SensorPort valoSensori = SensorPort.S2;
-		static final SensorPort painoSensori = SensorPort.S3; //syöttöhäiriön käsittelyyn
 	
 	public static void main (String[]  aArg) throws Exception{
 		Lajittelukone lajittelija = new Lajittelukone(tMoottori, vMoottori, oMoottori, valoSensori);
-		
 		LCD.drawString("Paina ENTER", 0, 1);
 		LCD.drawString("aloittaaksesi", 0, 2);
+		LCD.drawString("kalibroinnin", 0, 3);
 		Button.waitForPress();
-		LCD.clear();
-		
+		LCD.clear();	
 		Button.ESCAPE.addButtonListener(new Pysaytysnappi());
 		lajittelija.aloita();
 	}
